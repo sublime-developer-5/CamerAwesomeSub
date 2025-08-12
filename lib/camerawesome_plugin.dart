@@ -399,6 +399,11 @@ class CamerawesomePlugin {
     return CameraInterface().setAspectRatio(ratio.toUpperCase());
   }
 
+
+  static Future<void> setManualIso(double iso) {
+    return CameraInterface().setManualIso(iso);
+  }
+
   // TODO: implement it on Android
   /// Returns the list of available sensors on device.
   ///

@@ -6,6 +6,7 @@
 //
 
 #import "SingleCameraPreview.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation SingleCameraPreview {
   dispatch_queue_t _dispatchQueue;
@@ -645,5 +646,42 @@
     }
   }
 }
+
+- (void)setManualIso:(double)iso
+               error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    // Pick your device reference based on your class. In your codebase, you’ve used 'captureDevice' elsewhere.
+    AVCaptureDevice *device = self.captureDevice ?: self.videoDeviceInput.device;
+    if (!device) {
+        if (error) {
+            *error = [FlutterError errorWithCode:@"NO_DEVICE"
+                                         message:@"No capture device"
+                                         details:nil];
+        }
+        return;
+    }
+
+    NSError *lockError = nil;
+    if ([device lockForConfiguration:&lockError]) {
+        // Clamp ISO to device range
+        float minISO = device.activeFormat.minISO;
+        float maxISO = device.activeFormat.maxISO;
+        float isoClamped = (float)MAX(minISO, MIN(maxISO, iso));
+
+        // Keep exposure duration automatic; only change ISO
+        // Use the current exposure duration constant so only ISO changes.
+        [device setExposureModeCustomWithDuration:AVCaptureExposureDurationCurrent
+                                              ISO:isoClamped
+                                completionHandler:nil];
+
+        [device unlockForConfiguration];
+    } else {
+        if (error) {
+            *error = [FlutterError errorWithCode:@"ISO_LOCK_FAILED"
+                                         message:lockError.localizedDescription
+                                         details:nil];
+        }
+    }
+}
+
 
 @end

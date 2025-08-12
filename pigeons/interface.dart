@@ -358,6 +358,8 @@ abstract class CameraInterface {
 
   void receivedImageFromStream();
 
+  void setManualIso(double iso);
+
   @async
   bool stopRecordingVideo();
 

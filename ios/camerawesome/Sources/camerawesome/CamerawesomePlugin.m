@@ -757,4 +757,24 @@ FlutterEventSink physicalButtonEventSink;
   [AnalysisController yuv420toNv21YuvImage:yuvImage completion:completion];
 }
 
+- (void)setManualIsoIso:(NSNumber *)iso
+                  error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT"
+                                     message:@"init must be call before start"
+                                     details:nil];
+        return;
+    }
+
+    if (self.multiCamera != nil) {
+        // Keep it simple for now; you can fan out to each device later.
+        *error = [FlutterError errorWithCode:@"MULTI_CAMERA_UNSUPPORTED"
+                                     message:@"Manual ISO not implemented for multi camera yet"
+                                     details:nil];
+        return;
+    }
+
+    [self.camera setManualIso:[iso doubleValue] error:error];
+}
+
 @end
