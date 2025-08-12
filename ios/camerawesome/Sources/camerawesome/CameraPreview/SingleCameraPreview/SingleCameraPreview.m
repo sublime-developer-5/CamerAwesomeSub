@@ -6,7 +6,7 @@
 //
 
 #import "SingleCameraPreview.h"
-#import "Pigeon.h"
+
 
 @implementation SingleCameraPreview {
   dispatch_queue_t _dispatchQueue;
@@ -668,12 +668,7 @@
     }
 }
 
-- (PigeonIntRange *)getISORange {
-    AVCaptureDevice *device = self.captureDevice;
-    int minV = (int)lroundf(device.activeFormat.minISO);
-    int maxV = (int)lroundf(device.activeFormat.maxISO);
-    return [PigeonIntRange makeWithMin:@(minV) max:@(maxV)];
-}
+
 
 
 @end

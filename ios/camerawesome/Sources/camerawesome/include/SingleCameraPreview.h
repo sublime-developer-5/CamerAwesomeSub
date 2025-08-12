@@ -29,7 +29,7 @@
 #import "CameraPreviewTexture.h"
 #import "MultiCameraPreview.h"
 
-@class PigeonIntRange;
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -108,7 +108,7 @@ AVCaptureAudioDataOutputSampleBufferDelegate>
 - (void)setBrightness:(NSNumber *)brightness error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
 - (void)setManualIso:(double)iso
                error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
-- (PigeonIntRange *)getISORange;
+
 
 
 @end
