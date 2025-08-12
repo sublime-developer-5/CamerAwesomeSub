@@ -116,6 +116,9 @@ class CamerawesomePlugin {
     return _orientationStream;
   }
 
+
+
+
   static Stream<CameraPhysicalButton>? listenPhysicalButton() {
     _physicalButtonStream ??= _physicalButtonChannel
         .receiveBroadcastStream('physicalButtonChannel')

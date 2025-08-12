@@ -646,4 +646,122 @@
   }
 }
 
+
+- (void)setAutoExposureWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        if ([device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+            device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+        }
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+- (void)setManualExposureWithIso:(float)iso exposureNs:(int64_t)exposureNs error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        float minISO = device.activeFormat.minISO;
+        float maxISO = device.activeFormat.maxISO;
+        float clampedISO = fmaxf(minISO, fminf(maxISO, iso));
+
+        CMTime minDur = device.activeFormat.minExposureDuration;
+        CMTime maxDur = device.activeFormat.maxExposureDuration;
+        CMTime req = CMTimeMake(exposureNs, 1000000000); // ns → seconds
+        CMTime clamped = CMTimeMaximum(minDur, CMTimeMinimum(maxDur, req));
+
+        if ([device isExposureModeSupported:AVCaptureExposureModeCustom]) {
+            [device setExposureModeCustomWithDuration:clamped ISO:clampedISO completionHandler:nil];
+        }
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+- (void)setAutoWhiteBalanceWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        if ([device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+            device.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+        }
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+- (void)setWhiteBalanceTemperatureWithKelvin:(float)kelvin error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        AVCaptureWhiteBalanceTemperatureAndTintValues tempTint = { kelvin, 0 };
+        AVCaptureWhiteBalanceGains gains = [device deviceWhiteBalanceGainsForTemperatureAndTintValues:tempTint];
+
+        float minGain = 1.0f;
+        float maxGain = device.maxWhiteBalanceGain;
+        gains.redGain   = fmaxf(minGain, fminf(gains.redGain,   maxGain));
+        gains.greenGain = fmaxf(minGain, fminf(gains.greenGain, maxGain));
+        gains.blueGain  = fmaxf(minGain, fminf(gains.blueGain,  maxGain));
+
+        if ([device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked]) {
+            [device setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains:gains completionHandler:nil];
+        }
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+- (PigeonIntRange *)getISORange {
+    AVCaptureDevice *device = self.captureDevice;
+    PigeonIntRange *r = [PigeonIntRange makeWithMin:@((int)device.activeFormat.minISO)
+                                                max:@((int)device.activeFormat.maxISO)];
+    return r;
+}
+
+- (PigeonLongRange *)getExposureTimeRangeNs {
+    AVCaptureDevice *device = self.captureDevice;
+    int64_t minNs = (int64_t)(CMTimeGetSeconds(device.activeFormat.minExposureDuration) * 1e9);
+    int64_t maxNs = (int64_t)(CMTimeGetSeconds(device.activeFormat.maxExposureDuration) * 1e9);
+    return [PigeonLongRange makeWithMin:@(minNs) max:@(maxNs)];
+}
+
+// Map preview tap → device exposure point (normalize via your preview layer if needed)
+- (void)setExposurePoint:(CGPoint)point preview:(CGSize)preview error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+
+    // If your SingleCameraPreview has a AVCaptureVideoPreviewLayer *previewLayer;
+    // convert UIView point to device point:
+    CGPoint devicePoint = point;
+    if (self.previewLayer) {
+        devicePoint = [self.previewLayer captureDevicePointOfInterestForPoint:point];
+    } else {
+        // If point already normalized (0..1), keep as is.
+    }
+
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        if (device.isExposurePointOfInterestSupported) {
+            device.exposurePointOfInterest = devicePoint;
+            if ([device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            }
+        }
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+
 @end

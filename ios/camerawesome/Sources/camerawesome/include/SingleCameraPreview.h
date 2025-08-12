@@ -104,6 +104,30 @@ AVCaptureAudioDataOutputSampleBufferDelegate>
 - (CGSize)getEffectivPreviewSize;
 - (void)setUpCaptureSessionForAudioError:(nonnull void (^)(NSError *))error;
 - (void)setBrightness:(NSNumber *)brightness error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+/// Switch exposure back to auto (AE)
+- (void)setAutoExposureWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+
+/// Set full manual exposure (ISO + shutter)
+/// @param iso e.g. 50..2000 (clamp to activeFormat.minISO/maxISO)
+/// @param exposureNs shutter time in nanoseconds (clamp to device min/max)
+- (void)setManualExposureWithIso:(float)iso
+                      exposureNs:(int64_t)exposureNs
+                           error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+
+/// Get device ISO range (for clamping UI)
+- (PigeonIntRange *)getISORange;
+
+/// Get device exposure duration range (ns) (for clamping UI)
+- (PigeonLongRange *)getExposureTimeRangeNs;
+
+/// Switch white balance back to auto (AWB)
+- (void)setAutoWhiteBalanceWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+
+/// Lock white balance using Kelvin temperature
+/// @param kelvin typical range 2500–7500
+- (void)setWhiteBalanceTemperatureWithKelvin:(float)kelvin
+                                       error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -757,4 +757,112 @@ FlutterEventSink physicalButtonEventSink;
   [AnalysisController yuv420toNv21YuvImage:yuvImage completion:completion];
 }
 
+
+#pragma mark - Manual Exposure / White Balance additions
+
+// AUTO ↔ MANUAL exposure
+- (void)setAutoExposureWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil];
+        return;
+    }
+    if (self.multiCamera != nil) {
+        // Optional: apply to first device or all devices
+        [self.multiCamera setAutoExposureWithError:error];
+    } else {
+        [self.camera setAutoExposureWithError:error];
+    }
+}
+
+- (void)setManualExposureIso:(nonnull NSNumber *)iso exposureNs:(nonnull NSNumber *)exposureNs error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil];
+        return;
+    }
+    if (self.multiCamera != nil) {
+        [self.multiCamera setManualExposureWithIso:[iso floatValue]
+                                        exposureNs:[exposureNs longLongValue]
+                                             error:error];
+    } else {
+        [self.camera setManualExposureWithIso:[iso floatValue]
+                                   exposureNs:[exposureNs longLongValue]
+                                        error:error];
+    }
+}
+
+// Kelvin WB: AUTO ↔ TEMPERATURE
+- (void)setAutoWhiteBalanceWithError:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil];
+        return;
+    }
+    if (self.multiCamera != nil) {
+        [self.multiCamera setAutoWhiteBalanceWithError:error];
+    } else {
+        [self.camera setAutoWhiteBalanceWithError:error];
+    }
+}
+
+- (void)setWhiteBalanceTemperatureKelvin:(nonnull NSNumber *)kelvin error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil];
+        return;
+    }
+    if (self.multiCamera != nil) {
+        [self.multiCamera setWhiteBalanceTemperatureWithKelvin:[kelvin floatValue] error:error];
+    } else {
+        [self.camera setWhiteBalanceTemperatureWithKelvin:[kelvin floatValue] error:error];
+    }
+}
+
+// Optional: ranges for clamping UI sliders
+- (void)getISORangeWithCompletion:(nonnull void (^)(PigeonIntRange * _Nullable, FlutterError * _Nullable))completion {
+    if (self.camera == nil && self.multiCamera == nil) {
+        completion(nil, [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil]);
+        return;
+    }
+    if (self.multiCamera != nil) {
+        completion([self.multiCamera getISORange], nil);
+    } else {
+        completion([self.camera getISORange], nil);
+    }
+}
+
+- (void)getExposureTimeRangeNsWithCompletion:(nonnull void (^)(PigeonLongRange * _Nullable, FlutterError * _Nullable))completion {
+    if (self.camera == nil && self.multiCamera == nil) {
+        completion(nil, [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil]);
+        return;
+    }
+    if (self.multiCamera != nil) {
+        completion([self.multiCamera getExposureTimeRangeNs], nil);
+    } else {
+        completion([self.camera getExposureTimeRangeNs], nil);
+    }
+}
+
+// Optional: tap-to-expose (in addition to existing focus)
+- (void)setExposurePointPreviewSize:(PreviewSize *)previewSize
+                                  x:(NSNumber *)x
+                                  y:(NSNumber *)y
+                              error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (previewSize.width <= 0 || previewSize.height <= 0) {
+        *error = [FlutterError errorWithCode:@"INVALID_PREVIEW" message:@"preview size width and height must be set" details:nil];
+        return;
+    }
+    if (self.camera == nil && self.multiCamera == nil) {
+        *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT" message:@"init must be call before start" details:nil];
+        return;
+    }
+    if (self.multiCamera != nil) {
+        [self.multiCamera setExposurePoint:CGPointMake([x floatValue], [y floatValue])
+                                   preview:CGSizeMake([previewSize.width floatValue], [previewSize.height floatValue])
+                                     error:error];
+    } else {
+        [self.camera setExposurePoint:CGPointMake([x floatValue], [y floatValue])
+                              preview:CGSizeMake([previewSize.width floatValue], [previewSize.height floatValue])
+                                error:error];
+    }
+}
+
+
 @end

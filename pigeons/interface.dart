@@ -7,6 +7,16 @@ class PreviewSize {
   const PreviewSize(this.width, this.height);
 }
 
+class IntRange {
+  late int min;
+  late int max;
+}
+
+class LongRange {
+  late int min; // nanoseconds
+  late int max;
+}
+
 class PreviewData {
   double? textureId;
   PreviewSize? size;
@@ -335,6 +345,20 @@ abstract class CameraInterface {
     ExifPreferences exifPreferences,
     VideoOptions? videoOptions,
   );
+
+  void setAutoExposure();
+  void setManualExposure(int iso, int exposureNs);
+
+  // Optional: query ranges so you can clamp UI
+  IntRange getISORange();
+  LongRange getExposureTimeRangeNs();
+
+  // ---- Manual White Balance (Kelvin) ----
+  void setAutoWhiteBalance();
+  void setWhiteBalanceTemperature(int kelvin);
+
+  // Optional: exposure point (tap-to-expose)
+  void setExposurePoint(double previewW, double previewH, double x, double y);
 
   List<String> checkPermissions(List<String> permissions);
 
