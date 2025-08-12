@@ -30,7 +30,7 @@
 #import "MultiCameraPreview.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class PigeonIntRange, PigeonLongRange;
 @interface SingleCameraPreview : NSObject<AVCaptureVideoDataOutputSampleBufferDelegate,
 AVCaptureAudioDataOutputSampleBufferDelegate>
 
