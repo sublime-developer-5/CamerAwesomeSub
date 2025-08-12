@@ -525,4 +525,8 @@ class CamerawesomePlugin {
   static Future<void> setMirrorFrontCamera(bool mirrorFrontCamera) {
     return CameraInterface().setMirrorFrontCamera(mirrorFrontCamera);
   }
+
+  static Future<void> setManualIso(double iso) {
+    return CameraInterface().setManualIso(iso);
+  }
 }
