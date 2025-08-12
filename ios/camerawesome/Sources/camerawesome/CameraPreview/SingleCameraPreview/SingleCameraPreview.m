@@ -6,6 +6,7 @@
 //
 
 #import "SingleCameraPreview.h"
+#import "Pigeon.h"
 
 @implementation SingleCameraPreview {
   dispatch_queue_t _dispatchQueue;
@@ -645,5 +646,34 @@
     }
   }
 }
+
+- (void)setManualIso:(double)iso
+               error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) {
+        *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil];
+        return;
+    }
+    NSError *e = nil;
+    if ([device lockForConfiguration:&e]) {
+        float minISO = device.activeFormat.minISO;
+        float maxISO = device.activeFormat.maxISO;
+        float clamped = fmaxf(minISO, fminf(maxISO, (float)iso));
+        [device setExposureModeCustomWithDuration:AVCaptureExposureDurationCurrent
+                                              ISO:clamped
+                                completionHandler:nil];
+        [device unlockForConfiguration];
+    } else {
+        *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:e.localizedDescription details:nil];
+    }
+}
+
+- (PigeonIntRange *)getISORange {
+    AVCaptureDevice *device = self.captureDevice;
+    int minV = (int)lroundf(device.activeFormat.minISO);
+    int maxV = (int)lroundf(device.activeFormat.maxISO);
+    return [PigeonIntRange makeWithMin:@(minV) max:@(maxV)];
+}
+
 
 @end

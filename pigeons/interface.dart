@@ -7,6 +7,11 @@ class PreviewSize {
   const PreviewSize(this.width, this.height);
 }
 
+class PigeonIntRange {
+  late int min;
+  late int max;
+}
+
 class PreviewData {
   double? textureId;
   PreviewSize? size;
@@ -434,4 +439,6 @@ abstract class CameraInterface {
   bool isVideoRecordingAndImageAnalysisSupported(PigeonSensorPosition sensor);
 
   bool isMultiCamSupported();
+
+  void setManualIso(double iso);
 }

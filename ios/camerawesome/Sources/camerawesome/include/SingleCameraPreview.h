@@ -29,6 +29,8 @@
 #import "CameraPreviewTexture.h"
 #import "MultiCameraPreview.h"
 
+@class PigeonIntRange;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SingleCameraPreview : NSObject<AVCaptureVideoDataOutputSampleBufferDelegate,
@@ -104,6 +106,11 @@ AVCaptureAudioDataOutputSampleBufferDelegate>
 - (CGSize)getEffectivPreviewSize;
 - (void)setUpCaptureSessionForAudioError:(nonnull void (^)(NSError *))error;
 - (void)setBrightness:(NSNumber *)brightness error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+- (void)setManualIso:(double)iso
+               error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
+- (PigeonIntRange *)getISORange;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
