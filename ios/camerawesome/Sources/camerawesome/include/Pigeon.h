@@ -322,6 +322,8 @@ NSObject<FlutterMessageCodec> *CameraInterfaceGetCodec(void);
 - (void)isVideoRecordingAndImageAnalysisSupportedSensor:(PigeonSensorPosition)sensor completion:(void (^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 /// @return `nil` only when `error != nil`.
 - (nullable NSNumber *)isMultiCamSupportedWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setManualIsoIso:(nullable NSNumber *)iso error:(FlutterError *_Nullable *_Nonnull)error;
+
 @end
 
 extern void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<CameraInterface> *_Nullable api);
