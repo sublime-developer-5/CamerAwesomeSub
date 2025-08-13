@@ -1506,7 +1506,7 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
         FlutterBasicMessageChannel *channel_setExposureBias =
                 [[FlutterBasicMessageChannel alloc]
                         initWithName:@"dev.flutter.pigeon.CameraInterface.setExposureBias"
-                     binaryMessenger:messenger
+                     binaryMessenger:binaryMessenger
                                codec:[FlutterStandardMessageCodec sharedInstance]];
         if (api) {
             [channel_setExposureBias setMessageHandler:^(id _Nullable message, FlutterReply reply) {
