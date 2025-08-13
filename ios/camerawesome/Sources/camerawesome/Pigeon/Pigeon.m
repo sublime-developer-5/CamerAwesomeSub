@@ -1378,4 +1378,31 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
       [channel setMessageHandler:nil];
     }
   }
+
+    // dev.flutter.pigeon.CameraInterface.setManualIso
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setManualIso"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            // NOTE: match the exact selector your api implements.
+            // Most Pigeon versions generate: - (void)setManualIsoIso:(NSNumber *)iso error:(FlutterError **)error
+            NSCAssert([api respondsToSelector:@selector(setManualIsoIso:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setManualIsoIso:error:)", api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray *args = message;
+                id isoArg = (args.count > 0 ? args[0] : nil);
+                if (isoArg == (id)[NSNull null]) isoArg = nil;
+
+                FlutterError *error = nil;
+                [api setManualIsoIso:isoArg error:&error];
+                // wrapResult(...) is already defined in Pigeon.m; reuse it
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
+    }
 }
