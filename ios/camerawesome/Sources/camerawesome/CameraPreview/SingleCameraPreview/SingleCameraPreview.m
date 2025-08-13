@@ -688,6 +688,36 @@
     [device unlockForConfiguration];
 }
 
+- (void)setWhiteBalanceTemperature:(double)kelvin
+                             error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { if (error) *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+
+    NSError *lockErr = nil;
+    if (![device lockForConfiguration:&lockErr]) {
+        if (error) *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:lockErr.localizedDescription ?: @"Lock failed" details:nil];
+        return;
+    }
+
+    // Convert Kelvin -> device gains
+    AVCaptureDeviceWhiteBalanceTemperatureAndTintValues t;
+    t.temperature = kelvin;
+    t.tint = 0;
+
+    AVCaptureWhiteBalanceGains gains = [device deviceWhiteBalanceGainsForTemperatureAndTintValues:t];
+
+    // Normalize to allowed range (required by AVFoundation)
+    gains.redGain   = MAX(1.0, MIN(gains.redGain,   device.maxWhiteBalanceGain));
+    gains.greenGain = MAX(1.0, MIN(gains.greenGain, device.maxWhiteBalanceGain));
+    gains.blueGain  = MAX(1.0, MIN(gains.blueGain,  device.maxWhiteBalanceGain));
+
+    if ([device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked]) {
+        [device setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains:gains completionHandler:nil];
+    }
+
+    [device unlockForConfiguration];
+}
+
 
 
 

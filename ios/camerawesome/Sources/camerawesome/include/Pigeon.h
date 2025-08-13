@@ -325,7 +325,8 @@ NSObject<FlutterMessageCodec> *CameraInterfaceGetCodec(void);
 - (void)setManualIsoIso:(nullable NSNumber *)iso error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)setExposureBiasBias:(NSNumber *)bias
                       error:(FlutterError *_Nullable *_Nonnull)error;
-
+- (void)setWhiteBalanceTemperatureKelvin:(NSNumber *)kelvin
+                                   error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<CameraInterface> *_Nullable api);

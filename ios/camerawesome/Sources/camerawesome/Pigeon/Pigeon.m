@@ -1526,4 +1526,29 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
             [channel_setExposureBias setMessageHandler:nil];
         }
     }
+
+    {
+        FlutterBasicMessageChannel *channel_setTemperature =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setWhiteBalanceTemperature"
+                     binaryMessenger:binaryMessenger
+                               codec:[FlutterStandardMessageCodec sharedInstance]];
+        if (api) {
+            [channel_setTemperature setMessageHandler:^(id _Nullable message, FlutterReply reply) {
+                NSArray * args = (NSArray * )
+                message;
+                NSNumber * kelvin = args.count > 0 ? args[0] : nil;
+                FlutterError *error;
+                [api setWhiteBalanceTemperatureKelvin:kelvin error:&error];
+                if (error) {
+                    reply(@[error.code ?: [NSNull null], error.message ?: [NSNull null],
+                            error.details ?: [NSNull null]]);
+                } else {
+                    reply(@[[NSNull null]]);
+                }
+            }];
+        } else {
+            [channel_setTemperature setMessageHandler:nil];
+        }
+    }
 }

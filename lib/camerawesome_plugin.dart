@@ -532,4 +532,7 @@ class CamerawesomePlugin {
 
   static Future<void> setExposureBias(double bias) =>
       CameraInterface().setExposureBias(bias);
+
+  static Future<void> setWhiteBalanceTemperature(double kelvin) =>
+      CameraInterface().setWhiteBalanceTemperature(kelvin);
 }

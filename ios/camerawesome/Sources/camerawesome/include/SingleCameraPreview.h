@@ -110,7 +110,8 @@ AVCaptureAudioDataOutputSampleBufferDelegate>
                error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
 - (void)setExposureBias:(double)bias
                   error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
-
+- (void)setWhiteBalanceTemperature:(double)kelvin
+                             error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error;
 
 @end
 

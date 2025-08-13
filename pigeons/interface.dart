@@ -443,4 +443,6 @@ abstract class CameraInterface {
   void setManualIso(double iso);
 
   void setExposureBias(double bias); // e.g. -8.0..+8.0 (device dependent)
+
+  void setWhiteBalanceTemperature(double kelvin);
 }
