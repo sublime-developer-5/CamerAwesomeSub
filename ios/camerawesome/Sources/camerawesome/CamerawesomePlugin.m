@@ -756,22 +756,24 @@ FlutterEventSink physicalButtonEventSink;
 - (void)yuv420toNv21YuvImage:(nonnull AnalysisImageWrapper *)yuvImage completion:(nonnull void (^)(AnalysisImageWrapper * _Nullable, FlutterError * _Nullable))completion {
   [AnalysisController yuv420toNv21YuvImage:yuvImage completion:completion];
 
-    - (void)setManualIsoIso:(NSNumber *)iso
-    error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-        if (self.camera == nil && self.multiCamera == nil) {
-            if (error) *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT"
-                                                    message:@"init must be call before start"
-                                                    details:nil];
-            return;
-        }
-        // Forward to your preview class
-        if (self.multiCamera != nil) {
-            // If MultiCameraPreview doesn’t have setManualIso yet, target primary camera or just use self.camera
-            [self.multiCamera setManualIso:[iso doubleValue] error:error];
-        } else {
-            [self.camera setManualIso:[iso doubleValue] error:error];
-        }
-    }
+
 }
 
+
+- (void)setManualIsoIso:(NSNumber *)iso
+                  error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil && self.multiCamera == nil) {
+        if (error) *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT"
+                                                message:@"init must be call before start"
+                                                details:nil];
+        return;
+    }
+    // Forward to your preview class
+    if (self.multiCamera != nil) {
+        // If MultiCameraPreview doesn’t have setManualIso yet, target primary camera or just use self.camera
+        [self.multiCamera setManualIso:[iso doubleValue] error:error];
+    } else {
+        [self.camera setManualIso:[iso doubleValue] error:error];
+    }
+}
 @end
