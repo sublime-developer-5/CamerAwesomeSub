@@ -37,8 +37,9 @@ class SensorConfig {
   final BehaviorSubject<double> _brightnessController =
       BehaviorSubject<double>();
   late BehaviorSubject<double> _isoController;
+  late BehaviorSubject<double> _exposureBiasController;
   late Stream<double> iso$;
-
+  late Stream<double> exposureBias$;
   StreamSubscription? _brightnessSubscription;
 
   SensorConfig.single({
@@ -91,6 +92,15 @@ class SensorConfig {
     _isoController.listen((v) {
       CamerawesomePlugin.setManualIso(v);
     });
+
+
+    _exposureBiasController = BehaviorSubject<double>.seeded(0.0);
+    exposureBias$ =
+        _exposureBiasController.stream.debounceTime(const Duration(milliseconds: 120));
+  exposureBias$.listen((ev) {
+      CamerawesomePlugin.setExposureBias(ev);
+    });
+
     _brightnessSubscription = _brightnessController.stream
         .debounceTime(const Duration(milliseconds: 500))
         .listen((value) => CamerawesomePlugin.setBrightness(value));
@@ -207,6 +217,13 @@ class SensorConfig {
   /// Convenience getter
   double get iso => _isoController.value;
 
+
+  Future<void> setExposureBias(double ev) async {
+    _exposureBiasController.add(ev);
+    await CamerawesomePlugin.setExposureBias(ev);
+  }
+  double get exposureBias => _exposureBiasController.value;
+
   void dispose() {
     _brightnessSubscription?.cancel();
     _brightnessController.close();
@@ -215,5 +232,6 @@ class SensorConfig {
     _flashModeController.close();
     _aspectRatioController.close();
     _isoController.close();
+    _exposureBiasController.close();
   }
 }

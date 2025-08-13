@@ -323,6 +323,8 @@ NSObject<FlutterMessageCodec> *CameraInterfaceGetCodec(void);
 /// @return `nil` only when `error != nil`.
 - (nullable NSNumber *)isMultiCamSupportedWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)setManualIsoIso:(nullable NSNumber *)iso error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setExposureBiasBias:(NSNumber *)bias
+                      error:(FlutterError *_Nullable *_Nonnull)error;
 
 @end
 

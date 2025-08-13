@@ -1405,4 +1405,26 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
             [channel setMessageHandler:nil];
         }
     }
+
+    // --- setExposureBias ---
+    FlutterBasicMessageChannel *channel_setExposureBias =
+            [[FlutterBasicMessageChannel alloc]
+                    initWithName:@"dev.flutter.pigeon.CameraInterface.setExposureBias"
+                 binaryMessenger:messenger
+                           codec:[FlutterStandardMessageCodec sharedInstance]];
+    if (api) {
+        [channel_setExposureBias setMessageHandler:^(id _Nullable message, FlutterReply reply) {
+            NSArray *args = (NSArray *)message;
+            NSNumber *bias = args.count > 0 ? args[0] : nil;
+            FlutterError *error;
+            [api setExposureBiasBias:bias error:&error];
+            if (error) {
+                reply(@[ error.code ?: [NSNull null], error.message ?: [NSNull null], error.details ?: [NSNull null] ]);
+            } else {
+                reply(@[ [NSNull null] ]);
+            }
+        }];
+    } else {
+        [channel_setExposureBias setMessageHandler:nil];
+    }
 }

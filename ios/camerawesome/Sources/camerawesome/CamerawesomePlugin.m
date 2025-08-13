@@ -772,4 +772,15 @@ FlutterEventSink physicalButtonEventSink;
     }
     [self.camera setManualIso:[iso doubleValue] error:error];
 }
+
+- (void)setExposureBiasBias:(NSNumber *)bias
+                      error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    if (self.camera == nil) {
+        if (error) *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT"
+                                                message:@"init must be call before start"
+                                                details:nil];
+        return;
+    }
+    [self.camera setExposureBias:[bias doubleValue] error:error];
+}
 @end

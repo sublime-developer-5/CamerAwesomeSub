@@ -529,4 +529,7 @@ class CamerawesomePlugin {
   static Future<void> setManualIso(double iso) {
     return CameraInterface().setManualIso(iso);
   }
+
+  static Future<void> setExposureBias(double bias) =>
+      CameraInterface().setExposureBias(bias);
 }

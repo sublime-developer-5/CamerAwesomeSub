@@ -668,6 +668,26 @@
     }
 }
 
+- (void)setExposureBias:(double)bias
+                  error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
+    AVCaptureDevice *device = self.captureDevice;
+    if (!device) { if (error) *error = [FlutterError errorWithCode:@"NO_DEVICE" message:@"No capture device" details:nil]; return; }
+
+    NSError *lockErr = nil;
+    if (![device lockForConfiguration:&lockErr]) {
+        if (error) *error = [FlutterError errorWithCode:@"LOCK_FAILED" message:lockErr.localizedDescription ?: @"Lock failed" details:nil];
+        return;
+    }
+
+    // Optionally clamp to supported bias range (safe). Remove if you truly don't want clamping.
+    float minBias = device.minExposureTargetBias;
+    float maxBias = device.maxExposureTargetBias;
+    float target = (float)MIN(MAX(bias, minBias), maxBias);
+
+    [device setExposureTargetBias:target completionHandler:nil];
+    [device unlockForConfiguration];
+}
+
 
 
 
