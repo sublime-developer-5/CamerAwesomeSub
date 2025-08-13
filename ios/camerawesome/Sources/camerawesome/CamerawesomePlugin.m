@@ -761,19 +761,15 @@ FlutterEventSink physicalButtonEventSink;
 
 
 - (void)setManualIsoIso:(NSNumber *)iso
-                  error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error {
-    if (self.camera == nil && self.multiCamera == nil) {
+                  error:(FlutterError * _Nullable __autoreleasing * _Nonnull)error
+{
+    // Only support single-camera for ISO
+    if (self.camera == nil) {
         if (error) *error = [FlutterError errorWithCode:@"CAMERA_MUST_BE_INIT"
                                                 message:@"init must be call before start"
                                                 details:nil];
         return;
     }
-    // Forward to your preview class
-    if (self.multiCamera != nil) {
-        // If MultiCameraPreview doesn’t have setManualIso yet, target primary camera or just use self.camera
-        [self.multiCamera setManualIso:[iso doubleValue] error:error];
-    } else {
-        [self.camera setManualIso:[iso doubleValue] error:error];
-    }
+    [self.camera setManualIso:[iso doubleValue] error:error];
 }
 @end
