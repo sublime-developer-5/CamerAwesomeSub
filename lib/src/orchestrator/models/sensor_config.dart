@@ -36,6 +36,9 @@ class SensorConfig {
   /// Use this stream to debounce brightness events
   final BehaviorSubject<double> _brightnessController =
       BehaviorSubject<double>();
+  late BehaviorSubject<double> _isoController;
+  late Stream<double> iso$;
+
   StreamSubscription? _brightnessSubscription;
 
   SensorConfig.single({
@@ -83,6 +86,11 @@ class SensorConfig {
     _aspectRatioController = BehaviorSubject.seeded(aspectRatio);
     aspectRatio$ = _aspectRatioController.stream;
 
+    _isoController = BehaviorSubject<double>.seeded(0);
+    iso$ = _isoController.stream.debounceTime(const Duration(milliseconds: 150));
+    _isoController.listen((v) {
+      CamerawesomePlugin.setManualIso(v);
+    });
     _brightnessSubscription = _brightnessController.stream
         .debounceTime(const Duration(milliseconds: 500))
         .listen((value) => CamerawesomePlugin.setBrightness(value));
@@ -172,6 +180,33 @@ class SensorConfig {
   /// Returns the current brightness without stream
   double get brightness => _brightnessController.value;
 
+
+
+  // Future<void> _initIsoRange() async {
+  //   try {
+  //     _isoRange = await CamerawesomePlugin.getISORange();
+  //     // If controller was 0, seed to midpoint of range
+  //     if (_isoController.value == 0 && _isoRange != null) {
+  //       final mid = (_isoRange!.min + _isoRange!.max) / 2.0;
+  //       _isoController.add(mid.toDouble());
+  //       // also push to native once
+  //       await CamerawesomePlugin.setManualIso(mid.toDouble());
+  //     }
+  //   } catch (_) {
+  //     // ignore; keep using raw values if range is unavailable
+  //   }
+  // }
+
+  /// Explicit setter (use this from sliders)
+  Future<void> setIso(double iso) async {
+
+    _isoController.add(iso);
+    await CamerawesomePlugin.setManualIso(iso);
+  }
+
+  /// Convenience getter
+  double get iso => _isoController.value;
+
   void dispose() {
     _brightnessSubscription?.cancel();
     _brightnessController.close();
@@ -179,5 +214,6 @@ class SensorConfig {
     _zoomController.close();
     _flashModeController.close();
     _aspectRatioController.close();
+    _isoController.close();
   }
 }
