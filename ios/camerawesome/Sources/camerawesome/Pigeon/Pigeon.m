@@ -665,719 +665,813 @@ NSObject<FlutterMessageCodec> *CameraInterfaceGetCodec(void) {
 }
 
 void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<CameraInterface> *api) {
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setupCamera"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setupCameraSensors:aspectRatio:zoom:mirrorFrontCamera:enablePhysicalButton:flashMode:captureMode:enableImageStream:exifPreferences:videoOptions:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(setupCameraSensors:aspectRatio:zoom:mirrorFrontCamera:enablePhysicalButton:flashMode:captureMode:enableImageStream:exifPreferences:videoOptions:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<PigeonSensor *> *arg_sensors = GetNullableObjectAtIndex(args, 0);
-        NSString *arg_aspectRatio = GetNullableObjectAtIndex(args, 1);
-        NSNumber *arg_zoom = GetNullableObjectAtIndex(args, 2);
-        NSNumber *arg_mirrorFrontCamera = GetNullableObjectAtIndex(args, 3);
-        NSNumber *arg_enablePhysicalButton = GetNullableObjectAtIndex(args, 4);
-        NSString *arg_flashMode = GetNullableObjectAtIndex(args, 5);
-        NSString *arg_captureMode = GetNullableObjectAtIndex(args, 6);
-        NSNumber *arg_enableImageStream = GetNullableObjectAtIndex(args, 7);
-        ExifPreferences *arg_exifPreferences = GetNullableObjectAtIndex(args, 8);
-        VideoOptions *arg_videoOptions = GetNullableObjectAtIndex(args, 9);
-        [api setupCameraSensors:arg_sensors aspectRatio:arg_aspectRatio zoom:arg_zoom mirrorFrontCamera:arg_mirrorFrontCamera enablePhysicalButton:arg_enablePhysicalButton flashMode:arg_flashMode captureMode:arg_captureMode enableImageStream:arg_enableImageStream exifPreferences:arg_exifPreferences videoOptions:arg_videoOptions completion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setupCamera"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(setupCameraSensors:aspectRatio:zoom:mirrorFrontCamera:enablePhysicalButton:flashMode:captureMode:enableImageStream:exifPreferences:videoOptions:completion:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(setupCameraSensors:aspectRatio:zoom:mirrorFrontCamera:enablePhysicalButton:flashMode:captureMode:enableImageStream:exifPreferences:videoOptions:completion:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<PigeonSensor *> * arg_sensors = GetNullableObjectAtIndex(args, 0);
+                NSString *arg_aspectRatio = GetNullableObjectAtIndex(args, 1);
+                NSNumber * arg_zoom = GetNullableObjectAtIndex(args, 2);
+                NSNumber * arg_mirrorFrontCamera = GetNullableObjectAtIndex(args, 3);
+                NSNumber * arg_enablePhysicalButton = GetNullableObjectAtIndex(args, 4);
+                NSString *arg_flashMode = GetNullableObjectAtIndex(args, 5);
+                NSString *arg_captureMode = GetNullableObjectAtIndex(args, 6);
+                NSNumber * arg_enableImageStream = GetNullableObjectAtIndex(args, 7);
+                ExifPreferences *arg_exifPreferences = GetNullableObjectAtIndex(args, 8);
+                VideoOptions *arg_videoOptions = GetNullableObjectAtIndex(args, 9);
+                [api setupCameraSensors:arg_sensors aspectRatio:arg_aspectRatio zoom:arg_zoom mirrorFrontCamera:arg_mirrorFrontCamera enablePhysicalButton:arg_enablePhysicalButton flashMode:arg_flashMode captureMode:arg_captureMode enableImageStream:arg_enableImageStream exifPreferences:arg_exifPreferences videoOptions:arg_videoOptions completion:^(
+                        NSNumber *_Nullable output, FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.checkPermissions"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(checkPermissionsPermissions:error:)], @"CameraInterface api (%@) doesn't respond to @selector(checkPermissionsPermissions:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<NSString *> *arg_permissions = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        NSArray<NSString *> *output = [api checkPermissionsPermissions:arg_permissions error:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.checkPermissions"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(checkPermissionsPermissions:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(checkPermissionsPermissions:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<NSString * > *arg_permissions = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                NSArray<NSString * > *output = [api checkPermissionsPermissions:arg_permissions error:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  /// Returns given [CamerAwesomePermission] list (as String). Location permission might be
-  /// refused but the app should still be able to run.
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.requestPermissions"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(requestPermissionsSaveGpsLocation:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(requestPermissionsSaveGpsLocation:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_saveGpsLocation = GetNullableObjectAtIndex(args, 0);
-        [api requestPermissionsSaveGpsLocation:arg_saveGpsLocation completion:^(NSArray<NSString *> *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    /// Returns given [CamerAwesomePermission] list (as String). Location permission might be
+    /// refused but the app should still be able to run.
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.requestPermissions"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(requestPermissionsSaveGpsLocation:completion:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(requestPermissionsSaveGpsLocation:completion:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_saveGpsLocation = GetNullableObjectAtIndex(args, 0);
+                [api requestPermissionsSaveGpsLocation:arg_saveGpsLocation completion:^(
+                        NSArray<NSString * > *_Nullable output, FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getPreviewTextureId"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getPreviewTextureIdCameraPosition:error:)], @"CameraInterface api (%@) doesn't respond to @selector(getPreviewTextureIdCameraPosition:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_cameraPosition = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        NSNumber *output = [api getPreviewTextureIdCameraPosition:arg_cameraPosition error:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getPreviewTextureId"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getPreviewTextureIdCameraPosition:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getPreviewTextureIdCameraPosition:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_cameraPosition = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                NSNumber *
+                output = [api getPreviewTextureIdCameraPosition:arg_cameraPosition error:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.takePhoto"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(takePhotoSensors:paths:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(takePhotoSensors:paths:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<PigeonSensor *> *arg_sensors = GetNullableObjectAtIndex(args, 0);
-        NSArray<NSString *> *arg_paths = GetNullableObjectAtIndex(args, 1);
-        [api takePhotoSensors:arg_sensors paths:arg_paths completion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.takePhoto"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(takePhotoSensors:paths:completion:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(takePhotoSensors:paths:completion:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<PigeonSensor *> * arg_sensors = GetNullableObjectAtIndex(args, 0);
+                NSArray<NSString * > *arg_paths = GetNullableObjectAtIndex(args, 1);
+                [api takePhotoSensors:arg_sensors paths:arg_paths completion:^(NSNumber *_Nullable
+                                                                               output,
+                                                                               FlutterError *_Nullable
+                                                                               error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.recordVideo"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(recordVideoSensors:paths:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(recordVideoSensors:paths:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<PigeonSensor *> *arg_sensors = GetNullableObjectAtIndex(args, 0);
-        NSArray<NSString *> *arg_paths = GetNullableObjectAtIndex(args, 1);
-        [api recordVideoSensors:arg_sensors paths:arg_paths completion:^(FlutterError *_Nullable error) {
-          callback(wrapResult(nil, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.recordVideo"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(recordVideoSensors:paths:completion:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(recordVideoSensors:paths:completion:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<PigeonSensor *> * arg_sensors = GetNullableObjectAtIndex(args, 0);
+                NSArray<NSString * > *arg_paths = GetNullableObjectAtIndex(args, 1);
+                [api recordVideoSensors:arg_sensors paths:arg_paths completion:^(
+                        FlutterError *_Nullable error) {
+                    callback(wrapResult(nil, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.pauseVideoRecording"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(pauseVideoRecordingWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(pauseVideoRecordingWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api pauseVideoRecordingWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.pauseVideoRecording"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(pauseVideoRecordingWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(pauseVideoRecordingWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api pauseVideoRecordingWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.resumeVideoRecording"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(resumeVideoRecordingWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(resumeVideoRecordingWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api resumeVideoRecordingWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.resumeVideoRecording"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(resumeVideoRecordingWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(resumeVideoRecordingWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api resumeVideoRecordingWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.receivedImageFromStream"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(receivedImageFromStreamWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(receivedImageFromStreamWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api receivedImageFromStreamWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.receivedImageFromStream"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(receivedImageFromStreamWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(receivedImageFromStreamWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api receivedImageFromStreamWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.stopRecordingVideo"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(stopRecordingVideoWithCompletion:)], @"CameraInterface api (%@) doesn't respond to @selector(stopRecordingVideoWithCompletion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        [api stopRecordingVideoWithCompletion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.stopRecordingVideo"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(stopRecordingVideoWithCompletion:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(stopRecordingVideoWithCompletion:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                [api stopRecordingVideoWithCompletion:^(NSNumber *_Nullable output,
+                                                        FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getFrontSensors"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getFrontSensorsWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(getFrontSensorsWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSArray<PigeonSensorTypeDevice *> *output = [api getFrontSensorsWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getFrontSensors"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getFrontSensorsWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getFrontSensorsWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSArray<PigeonSensorTypeDevice *> * output = [api getFrontSensorsWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getBackSensors"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getBackSensorsWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(getBackSensorsWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSArray<PigeonSensorTypeDevice *> *output = [api getBackSensorsWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getBackSensors"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getBackSensorsWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getBackSensorsWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSArray<PigeonSensorTypeDevice *> * output = [api getBackSensorsWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.start"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(startWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(startWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSNumber *output = [api startWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.start"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(startWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(startWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSNumber * output = [api startWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.stop"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(stopWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(stopWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSNumber *output = [api stopWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.stop"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(stopWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(stopWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSNumber * output = [api stopWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setFlashMode"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setFlashModeMode:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setFlashModeMode:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSString *arg_mode = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setFlashModeMode:arg_mode error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setFlashMode"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setFlashModeMode:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setFlashModeMode:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSString *arg_mode = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setFlashModeMode:arg_mode error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.handleAutoFocus"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(handleAutoFocusWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(handleAutoFocusWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api handleAutoFocusWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.handleAutoFocus"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(handleAutoFocusWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(handleAutoFocusWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api handleAutoFocusWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  /// Starts auto focus on a point at ([x], [y]).
-  ///
-  /// On Android, you can control after how much time you want to switch back
-  /// to passive focus mode with [androidFocusSettings].
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.focusOnPoint"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(focusOnPointPreviewSize:x:y:androidFocusSettings:error:)], @"CameraInterface api (%@) doesn't respond to @selector(focusOnPointPreviewSize:x:y:androidFocusSettings:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        PreviewSize *arg_previewSize = GetNullableObjectAtIndex(args, 0);
-        NSNumber *arg_x = GetNullableObjectAtIndex(args, 1);
-        NSNumber *arg_y = GetNullableObjectAtIndex(args, 2);
-        AndroidFocusSettings *arg_androidFocusSettings = GetNullableObjectAtIndex(args, 3);
-        FlutterError *error;
-        [api focusOnPointPreviewSize:arg_previewSize x:arg_x y:arg_y androidFocusSettings:arg_androidFocusSettings error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    /// Starts auto focus on a point at ([x], [y]).
+    ///
+    /// On Android, you can control after how much time you want to switch back
+    /// to passive focus mode with [androidFocusSettings].
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.focusOnPoint"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(focusOnPointPreviewSize:x:y:androidFocusSettings:error:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(focusOnPointPreviewSize:x:y:androidFocusSettings:error:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                PreviewSize *arg_previewSize = GetNullableObjectAtIndex(args, 0);
+                NSNumber * arg_x = GetNullableObjectAtIndex(args, 1);
+                NSNumber * arg_y = GetNullableObjectAtIndex(args, 2);
+                AndroidFocusSettings *arg_androidFocusSettings = GetNullableObjectAtIndex(args, 3);
+                FlutterError *error;
+                [api focusOnPointPreviewSize:arg_previewSize x:arg_x y:arg_y androidFocusSettings:arg_androidFocusSettings error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setZoom"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setZoomZoom:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setZoomZoom:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_zoom = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setZoomZoom:arg_zoom error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setZoom"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setZoomZoom:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setZoomZoom:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_zoom = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setZoomZoom:arg_zoom error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setMirrorFrontCamera"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setMirrorFrontCameraMirror:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setMirrorFrontCameraMirror:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_mirror = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setMirrorFrontCameraMirror:arg_mirror error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setMirrorFrontCamera"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setMirrorFrontCameraMirror:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setMirrorFrontCameraMirror:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_mirror = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setMirrorFrontCameraMirror:arg_mirror error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setSensor"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setSensorSensors:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setSensorSensors:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<PigeonSensor *> *arg_sensors = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setSensorSensors:arg_sensors error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setSensor"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setSensorSensors:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setSensorSensors:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<PigeonSensor *> * arg_sensors = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setSensorSensors:arg_sensors error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setCorrection"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setCorrectionBrightness:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setCorrectionBrightness:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_brightness = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setCorrectionBrightness:arg_brightness error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setCorrection"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setCorrectionBrightness:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setCorrectionBrightness:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_brightness = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setCorrectionBrightness:arg_brightness error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getMinZoom"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getMinZoomWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(getMinZoomWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSNumber *output = [api getMinZoomWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getMinZoom"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getMinZoomWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getMinZoomWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSNumber * output = [api getMinZoomWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getMaxZoom"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getMaxZoomWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(getMaxZoomWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSNumber *output = [api getMaxZoomWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getMaxZoom"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getMaxZoomWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getMaxZoomWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSNumber * output = [api getMaxZoomWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setCaptureMode"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setCaptureModeMode:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setCaptureModeMode:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSString *arg_mode = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setCaptureModeMode:arg_mode error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setCaptureMode"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setCaptureModeMode:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setCaptureModeMode:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSString *arg_mode = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setCaptureModeMode:arg_mode error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setRecordingAudioMode"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setRecordingAudioModeEnableAudio:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(setRecordingAudioModeEnableAudio:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_enableAudio = GetNullableObjectAtIndex(args, 0);
-        [api setRecordingAudioModeEnableAudio:arg_enableAudio completion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setRecordingAudioMode"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(setRecordingAudioModeEnableAudio:completion:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(setRecordingAudioModeEnableAudio:completion:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_enableAudio = GetNullableObjectAtIndex(args, 0);
+                [api setRecordingAudioModeEnableAudio:arg_enableAudio completion:^(
+                        NSNumber *_Nullable output, FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.availableSizes"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(availableSizesWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(availableSizesWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSArray<PreviewSize *> *output = [api availableSizesWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.availableSizes"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(availableSizesWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(availableSizesWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSArray<PreviewSize *> * output = [api availableSizesWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.refresh"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(refreshWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(refreshWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api refreshWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.refresh"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(refreshWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(refreshWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api refreshWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.getEffectivPreviewSize"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(getEffectivPreviewSizeIndex:error:)], @"CameraInterface api (%@) doesn't respond to @selector(getEffectivPreviewSizeIndex:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSNumber *arg_index = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        PreviewSize *output = [api getEffectivPreviewSizeIndex:arg_index error:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.getEffectivPreviewSize"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(getEffectivPreviewSizeIndex:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(getEffectivPreviewSizeIndex:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSNumber * arg_index = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                PreviewSize *output = [api getEffectivPreviewSizeIndex:arg_index error:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setPhotoSize"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setPhotoSizeSize:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setPhotoSizeSize:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        PreviewSize *arg_size = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setPhotoSizeSize:arg_size error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setPhotoSize"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setPhotoSizeSize:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setPhotoSizeSize:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                PreviewSize *arg_size = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setPhotoSizeSize:arg_size error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setPreviewSize"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setPreviewSizeSize:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setPreviewSizeSize:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        PreviewSize *arg_size = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setPreviewSizeSize:arg_size error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setPreviewSize"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setPreviewSizeSize:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setPreviewSizeSize:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                PreviewSize *arg_size = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setPreviewSizeSize:arg_size error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setAspectRatio"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setAspectRatioAspectRatio:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setAspectRatioAspectRatio:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSString *arg_aspectRatio = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setAspectRatioAspectRatio:arg_aspectRatio error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setAspectRatio"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setAspectRatioAspectRatio:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setAspectRatioAspectRatio:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSString *arg_aspectRatio = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setAspectRatioAspectRatio:arg_aspectRatio error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setupImageAnalysisStream"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setupImageAnalysisStreamFormat:width:maxFramesPerSecond:autoStart:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setupImageAnalysisStreamFormat:width:maxFramesPerSecond:autoStart:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSString *arg_format = GetNullableObjectAtIndex(args, 0);
-        NSNumber *arg_width = GetNullableObjectAtIndex(args, 1);
-        NSNumber *arg_maxFramesPerSecond = GetNullableObjectAtIndex(args, 2);
-        NSNumber *arg_autoStart = GetNullableObjectAtIndex(args, 3);
-        FlutterError *error;
-        [api setupImageAnalysisStreamFormat:arg_format width:arg_width maxFramesPerSecond:arg_maxFramesPerSecond autoStart:arg_autoStart error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setupImageAnalysisStream"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(setupImageAnalysisStreamFormat:width:maxFramesPerSecond:autoStart:error:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(setupImageAnalysisStreamFormat:width:maxFramesPerSecond:autoStart:error:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSString *arg_format = GetNullableObjectAtIndex(args, 0);
+                NSNumber * arg_width = GetNullableObjectAtIndex(args, 1);
+                NSNumber * arg_maxFramesPerSecond = GetNullableObjectAtIndex(args, 2);
+                NSNumber * arg_autoStart = GetNullableObjectAtIndex(args, 3);
+                FlutterError *error;
+                [api setupImageAnalysisStreamFormat:arg_format width:arg_width maxFramesPerSecond:arg_maxFramesPerSecond autoStart:arg_autoStart error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setExifPreferences"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setExifPreferencesExifPreferences:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(setExifPreferencesExifPreferences:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        ExifPreferences *arg_exifPreferences = GetNullableObjectAtIndex(args, 0);
-        [api setExifPreferencesExifPreferences:arg_exifPreferences completion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setExifPreferences"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(setExifPreferencesExifPreferences:completion:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(setExifPreferencesExifPreferences:completion:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                ExifPreferences *arg_exifPreferences = GetNullableObjectAtIndex(args, 0);
+                [api setExifPreferencesExifPreferences:arg_exifPreferences completion:^(
+                        NSNumber *_Nullable output, FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.startAnalysis"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(startAnalysisWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(startAnalysisWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api startAnalysisWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.startAnalysis"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(startAnalysisWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(startAnalysisWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api startAnalysisWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.stopAnalysis"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(stopAnalysisWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(stopAnalysisWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        [api stopAnalysisWithError:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.stopAnalysis"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(stopAnalysisWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(stopAnalysisWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                [api stopAnalysisWithError:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.setFilter"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(setFilterMatrix:error:)], @"CameraInterface api (%@) doesn't respond to @selector(setFilterMatrix:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSArray<NSNumber *> *arg_matrix = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api setFilterMatrix:arg_matrix error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setFilter"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(setFilterMatrix:error:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(setFilterMatrix:error:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                NSArray<NSNumber * > *arg_matrix = GetNullableObjectAtIndex(args, 0);
+                FlutterError *error;
+                [api setFilterMatrix:arg_matrix error:&error];
+                callback(wrapResult(nil, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.isVideoRecordingAndImageAnalysisSupported"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(isVideoRecordingAndImageAnalysisSupportedSensor:completion:)], @"CameraInterface api (%@) doesn't respond to @selector(isVideoRecordingAndImageAnalysisSupportedSensor:completion:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        PigeonSensorPosition arg_sensor = [GetNullableObjectAtIndex(args, 0) integerValue];
-        [api isVideoRecordingAndImageAnalysisSupportedSensor:arg_sensor completion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
-          callback(wrapResult(output, error));
-        }];
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.isVideoRecordingAndImageAnalysisSupported"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert(
+                    [api respondsToSelector:@selector(isVideoRecordingAndImageAnalysisSupportedSensor:completion:)],
+                    @"CameraInterface api (%@) doesn't respond to @selector(isVideoRecordingAndImageAnalysisSupportedSensor:completion:)",
+                    api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                NSArray * args = message;
+                PigeonSensorPosition arg_sensor = [GetNullableObjectAtIndex(args, 0) integerValue];
+                [api isVideoRecordingAndImageAnalysisSupportedSensor:arg_sensor completion:^(
+                        NSNumber *_Nullable output, FlutterError *_Nullable error) {
+                    callback(wrapResult(output, error));
+                }];
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.CameraInterface.isMultiCamSupported"
-        binaryMessenger:binaryMessenger
-        codec:CameraInterfaceGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(isMultiCamSupportedWithError:)], @"CameraInterface api (%@) doesn't respond to @selector(isMultiCamSupportedWithError:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        FlutterError *error;
-        NSNumber *output = [api isMultiCamSupportedWithError:&error];
-        callback(wrapResult(output, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.isMultiCamSupported"
+                     binaryMessenger:binaryMessenger
+                               codec:CameraInterfaceGetCodec()];
+        if (api) {
+            NSCAssert([api respondsToSelector:@selector(isMultiCamSupportedWithError:)],
+                      @"CameraInterface api (%@) doesn't respond to @selector(isMultiCamSupportedWithError:)",
+                      api);
+            [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+                FlutterError *error;
+                NSNumber * output = [api isMultiCamSupportedWithError:&error];
+                callback(wrapResult(output, error));
+            }];
+        } else {
+            [channel setMessageHandler:nil];
+        }
     }
-  }
 
     // dev.flutter.pigeon.CameraInterface.setManualIso
     {
@@ -1390,11 +1484,12 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
             // NOTE: match the exact selector your api implements.
             // Most Pigeon versions generate: - (void)setManualIsoIso:(NSNumber *)iso error:(FlutterError **)error
             NSCAssert([api respondsToSelector:@selector(setManualIsoIso:error:)],
-                      @"CameraInterface api (%@) doesn't respond to @selector(setManualIsoIso:error:)", api);
+                      @"CameraInterface api (%@) doesn't respond to @selector(setManualIsoIso:error:)",
+                      api);
             [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-                NSArray *args = message;
+                NSArray * args = message;
                 id isoArg = (args.count > 0 ? args[0] : nil);
-                if (isoArg == (id)[NSNull null]) isoArg = nil;
+                if (isoArg == (id) [NSNull null]) isoArg = nil;
 
                 FlutterError *error = nil;
                 [api setManualIsoIso:isoArg error:&error];
@@ -1407,24 +1502,28 @@ void CameraInterfaceSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<C
     }
 
     // --- setExposureBias ---
-    FlutterBasicMessageChannel *channel_setExposureBias =
-            [[FlutterBasicMessageChannel alloc]
-                    initWithName:@"dev.flutter.pigeon.CameraInterface.setExposureBias"
-                 binaryMessenger:messenger
-                           codec:[FlutterStandardMessageCodec sharedInstance]];
-    if (api) {
-        [channel_setExposureBias setMessageHandler:^(id _Nullable message, FlutterReply reply) {
-            NSArray *args = (NSArray *)message;
-            NSNumber *bias = args.count > 0 ? args[0] : nil;
-            FlutterError *error;
-            [api setExposureBiasBias:bias error:&error];
-            if (error) {
-                reply(@[ error.code ?: [NSNull null], error.message ?: [NSNull null], error.details ?: [NSNull null] ]);
-            } else {
-                reply(@[ [NSNull null] ]);
-            }
-        }];
-    } else {
-        [channel_setExposureBias setMessageHandler:nil];
+    {
+        FlutterBasicMessageChannel *channel_setExposureBias =
+                [[FlutterBasicMessageChannel alloc]
+                        initWithName:@"dev.flutter.pigeon.CameraInterface.setExposureBias"
+                     binaryMessenger:messenger
+                               codec:[FlutterStandardMessageCodec sharedInstance]];
+        if (api) {
+            [channel_setExposureBias setMessageHandler:^(id _Nullable message, FlutterReply reply) {
+                NSArray * args = (NSArray * )
+                message;
+                NSNumber * bias = args.count > 0 ? args[0] : nil;
+                FlutterError *error;
+                [api setExposureBiasBias:bias error:&error];
+                if (error) {
+                    reply(@[error.code ?: [NSNull null], error.message ?: [NSNull null],
+                            error.details ?: [NSNull null]]);
+                } else {
+                    reply(@[[NSNull null]]);
+                }
+            }];
+        } else {
+            [channel_setExposureBias setMessageHandler:nil];
+        }
     }
 }
