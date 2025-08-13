@@ -700,7 +700,7 @@
     }
 
     // Convert Kelvin -> device gains
-    AVCaptureDeviceWhiteBalanceTemperatureAndTintValues t;
+    AVCaptureWhiteBalanceTemperatureAndTintValues t;
     t.temperature = kelvin;
     t.tint = 0;
 
